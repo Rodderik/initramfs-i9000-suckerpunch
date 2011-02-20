@@ -55,11 +55,11 @@ if /sbin/busybox [ "`grep KERNELVM /system/etc/tweaks.conf`" ]; then
 fi
 
 # Tweak kernel scheduler
-if /sbin/busybox [ "`grep KERNELSCHED /system/etc/tweaks.conf`" ]; then
-  echo "18000000" > /proc/sys/kernel/sched_latency_ns;
-  echo "1500000" > /proc/sys/kernel/sched_min_granularity_ns;
-  echo "3000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
-fi
+#if /sbin/busybox [ "`grep KERNELSCHED /system/etc/tweaks.conf`" ]; then
+#  echo "18000000" > /proc/sys/kernel/sched_latency_ns;
+#  echo "1500000" > /proc/sys/kernel/sched_min_granularity_ns;
+#  echo "3000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+#fi
 
 # Miscellaneous tweaks
 if /sbin/busybox [ "`grep MISC /system/etc/tweaks.conf`" ]; then
@@ -68,8 +68,8 @@ if /sbin/busybox [ "`grep MISC /system/etc/tweaks.conf`" ]; then
 fi
 
 # lowmemkiller tweak
-if /sbin/busybox [ "`grep LOWMEMKILLEROPT /system/etc/tweaks.conf`" ]; then
-  echo "2560,4096,6144,7168,8192,9216" > /sys/module/lowmemorykiller/parameters/minfree
+if /sbin/busybox [ "`grep OLDLOWMEMKILLER /system/etc/tweaks.conf`" ]; then
+  echo "2560,4096,6144,10240,11264,12288" > /sys/module/lowmemorykiller/parameters/minfree
 fi
 
 # Enable CIFS tweak
@@ -296,5 +296,6 @@ rm /sbin/fsck* /sbin/mkfs*
 # play android bootanimation.zip if it exists, if not play playlogos1
 if [ ! -f /data/local/bootanimation.zip ] && [ ! -f /system/media/bootanimation.zip ];
 then
+setprop audioflinger.bootsnd 1
 exec /system/bin/playlogos1
 fi

@@ -730,3 +730,8 @@ fi
 if /sbin/busybox [ "`grep AUTOBRIGHTNESS_NO_DARKEST /system/etc/speedmodcolor.conf`" ]; then
   echo 0 > /sys/devices/virtual/misc/speedmodk_gp2a/auto_min_dark
 fi
+
+# Bootanimation sound tweak
+if /sbin/busybox [ "`grep BOOTANIMATIONSOUND /system/etc/tweaks.conf`" ]; then
+  setprop audioflinger.bootsnd 1
+fi
